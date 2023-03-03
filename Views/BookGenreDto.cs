@@ -1,0 +1,1 @@
+public record BookGenreDto(int BookId, int GenreId, string BookTitle, string GenreName);
