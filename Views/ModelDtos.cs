@@ -27,6 +27,6 @@ public record GetGenreDto(string Name, List<GenreBookDto> Books);
 
 public record GenreBookDto(string Title);
 
-public record PutGenre(string Name);
+public record PutGenreDto(string Name);
 
-public record PostGenre(string Name);
+public record PostGenreDto(string Name);

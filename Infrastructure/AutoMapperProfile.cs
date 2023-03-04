@@ -4,9 +4,20 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<Book, GetBookDto>()
-            .ForMember(dto => dto.GenreName, book => book.MapFrom(b => b.Genre.Name))
-            .ForMember(dto => dto.PublisherName, book => book.MapFrom(b => b.Publisher.Name))
-            .ForMember(dto => dto.Authors, book => book.MapFrom(b => b.Authors));
+        CreateMap<Book, GetBookDto>();
+        CreateMap<PostBookDto, Book>();
+        CreateMap<PutBookDto, Book>();
+
+        CreateMap<Author, GetAuthorDto>();
+        CreateMap<PostAuthorDto, Author>();
+        CreateMap<PutAuthorDto, Author>();
+
+        CreateMap<Publisher, GetPublisherDto>();
+        CreateMap<PostPublisherDto, Publisher>();
+        CreateMap<PutPublisherDto, Publisher>();
+
+        CreateMap<Genre, GetGenreDto>(); 
+        CreateMap<PostGenreDto,Genre>();
+        CreateMap<PutGenreDto, Genre>();
     }
 }
