@@ -22,7 +22,7 @@ public class Context : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Author>().HasIndex(author => author.Id).IsUnique();
+        // modelBuilder.Entity<Author>().HasIndex(author => author.Id).IsUnique();
         modelBuilder.Entity<Publisher>().HasIndex(publisher => publisher.Id).IsUnique();
         modelBuilder.Entity<Book>().HasIndex(book => book.Id).IsUnique();
         modelBuilder.Entity<Genre>().HasIndex(genre => genre.Id).IsUnique();
@@ -135,10 +135,10 @@ public class Context : DbContext
         {
             for (int j = 1; j <= bookPerGenre; j++)
             {
-                books[(i - 1) * (j - 1)] = new()
+                books[(i - 1) * bookPerGenre + j - 1] = new()
                 {
-                    Id = i * j,
-                    Title = $"Book_${i * j}",
+                    Id = (i - 1) * bookPerGenre + j,
+                    Title = $"Book_${(i - 1) * bookPerGenre + j}",
                     GenreId = i,
                     PublisherId = random.Next(1, publishersCount + 1)
                 };
@@ -148,14 +148,15 @@ public class Context : DbContext
         modelBuilder.Entity<Book>()
                     .HasMany(book => book.Authors)
                     .WithMany(author => author.Books)
-                    .UsingEntity(bookAuthor => bookAuthor.HasData(
+                    .UsingEntity(authorBook => authorBook.HasData(
                         Enumerable.Range(1, bookPerGenre * genresCount)
                                   .Select(index => new 
                                       { 
                                           AuthorsId = random.Next(1, authorsCount + 1), 
                                           BooksId = index 
                                       })
-                                  .ToArray()))
+                                  .ToArray()
+                        ))
                     .HasData(books); 
     }
 }
